@@ -19,6 +19,7 @@ if width == nil then
     print("1. Place turtle facing direction of said platform on left side.")
     print("2. Load turtle with materials for the platform.")
     print("3. Type 'platform <length> <width>'")
+	return 0
 end
 
 turtle.select(slot)
