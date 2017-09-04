@@ -9,9 +9,9 @@ local slot = 1
 --Helper Functions
 function nextSlot()
 	if slot < 16 then
-		return (slot = slot + 1)
+		slot = slot + 1
 	else
-		return slot = 1
+		slot = 1
 	end
 end
 
