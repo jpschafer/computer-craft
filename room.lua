@@ -74,45 +74,6 @@ function buildFloor()
 	  
 	  if i < width then
 	  
-		if turnRight == true then
-		  turtle.turnRight()
-		  forward()
-		  turtle.turnRight()
-		  turnRight = false
-		else
-		  turtle.turnLeft()
-		  forward()
-		  turtle.turnLeft()
-		  turnRight = true
-		end
-		
-	  end
-	  
-	end
-end
-
-function buildFloor() 
-	turtle.select(slot)
-
-	for i = 1, width, 1 do
-	  
-		--Move Forward X Blocks and clear for Floor
-		for j = 1, length, 1 do
-			if turtle.getItemCount(slot) == 0 then
-				nextSlot()
-				place()
-			else
-				place()
-			end
-			
-			if j < length then
-				forward()
-			end
-	  
-		end
-	  
-	  if i < width then
-	  
 		if wallSide == 1 then
 			turtle.turnRight()
 			forward()
