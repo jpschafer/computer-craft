@@ -13,6 +13,17 @@ function nextSlot()
 	else
 		slot = 1
 	end
+      turtle.select(slot)
+end
+
+function place()
+	block = turtle.inspectDown()
+	if block then
+		if not turtle.compareDown() then
+			turtle.digDown()
+			turtle.placeDown()
+		end
+	end
 end
 
 if width == nil then
@@ -21,6 +32,12 @@ if width == nil then
     print("3. Type 'platform <length> <width>'")
 	return 0
 end
+
+-- Main Function --
+function main()
+		
+end
+
 
 turtle.select(slot)
 
@@ -32,7 +49,6 @@ for j = 1, width, 1 do
   for i = 1, length, 1 do
     if turtle.getItemCount(slot) == 0 then
       nextSlot()
-      turtle.select(slot)
       turtle.digDown()
       turtle.placeDown()
     else
