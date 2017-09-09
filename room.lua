@@ -7,6 +7,12 @@ local slot = 1
 local wallSide = 0
 local NUM_SLOTS = 16
 
+local FLOOR_SLOT = 1 --Slot which defines the block ID for floor
+local WALL_SLOT = 2 --Slot which defines the block ID for Wall
+
+local floorName = ""
+local wallName = ""
+
 --Helper Functions
 function nextSlot()
 	if slot < NUM_SLOTS then
@@ -15,6 +21,22 @@ function nextSlot()
 		slot = 1
 	end
       turtle.select(slot)
+end
+
+function getNextStack(name) 
+	found = false
+	while not found do
+		local data = turtle.getItemDetail(slot)
+		if data then
+			if data.name == name then
+				found = true
+			else
+				nextSlot()
+			end
+		else 
+			nextSlot()
+		end
+	end
 end
 
 function refuel()
@@ -52,15 +74,20 @@ function up()
 	turtle.up()
 end
 
+function determineBlocks() 
+	floorName = turtle.getItemDetail(FLOOR_SLOT).name
+	wallName = turtle.getItemDetail(WALL_SLOT).name
+end
+
 function buildFloor() 
-	turtle.select(slot)
+	getNextStack(floorName)
 
 	for i = 1, width, 1 do
 	  
 		--Move Forward X Blocks and clear for Floor
 		for j = 1, length, 1 do
 			if turtle.getItemCount(slot) == 0 then
-				nextSlot()
+				getNextStack(floorName)
 				place()
 			else
 				place()
@@ -89,7 +116,8 @@ function buildFloor()
 end
 
 function buildWalls() 
-	turtle.select(slot)
+	--turtle.select(slot)
+	getNextStack(wallName)
 	turtle.turnRight()
 	
 	--Deal with oddities on which end I'm on.
@@ -109,7 +137,7 @@ function buildWalls()
 			
 			for k = 1, wallSize, 1 do
 				if turtle.getItemCount(slot) == 0 then
-					nextSlot()
+					getNextStack(wallName)
 					place()
 				else
 					place()
@@ -141,6 +169,9 @@ function main()
 	end
 	-- Look For Fuel if empty
 	refuel()
+	
+	-- Determine block ID's
+	determineBlocks()
 	
 	-- Build floor
 	buildFloor()
